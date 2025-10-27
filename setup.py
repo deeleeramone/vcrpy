@@ -30,18 +30,6 @@ install_requires = [
     "PyYAML",
     "wrapt",
     "yarl",
-    # Support for urllib3 >=2 needs CPython >=3.10
-    # so we need to block urllib3 >=2 for Python <3.10 and PyPy for now.
-    # Note that vcrpy would work fine without any urllib3 around,
-    # so this block and the dependency can be dropped at some point
-    # in the future. For more Details:
-    # https://github.com/kevin1024/vcrpy/pull/699#issuecomment-1551439663
-    "urllib3 <2; python_version <'3.10'",
-    # https://github.com/kevin1024/vcrpy/pull/775#issuecomment-1847849962
-    "urllib3 <2; platform_python_implementation =='PyPy'",
-    # Workaround for Poetry with CPython >= 3.10, problem description at:
-    # https://github.com/kevin1024/vcrpy/pull/826
-    "urllib3; platform_python_implementation !='PyPy' and python_version >='3.10'",
 ]
 
 extras_require = {
@@ -57,7 +45,6 @@ extras_require = {
         "pytest",
         "requests>=2.22.0",
         "tornado",
-        "urllib3",
         # Needed to un-break httpbin 0.7.0. For httpbin >=0.7.1 and after,
         # this pin and the dependency itself can be removed, provided
         # that the related bug in httpbin has been fixed:
@@ -71,7 +58,9 @@ extras_require = {
 setup(
     name="vcrpy",
     version=find_version("vcr", "__init__.py"),
-    description=("Automatically mock your HTTP interactions to simplify and speed up testing"),
+    description=(
+        "Automatically mock your HTTP interactions to simplify and speed up testing"
+    ),
     long_description=long_description,
     long_description_content_type="text/x-rst",
     author="Kevin McCarthy",
